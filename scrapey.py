@@ -5,7 +5,8 @@ import urllib
 import re
 import os 
 
-html_page = requests.get('https://www.1999.co.jp/eng/image/10700202')
+link = input("Please enter link \n")
+html_page = requests.get(link)
 soup = BeautifulSoup(html_page.content, 'html.parser')
 
 image_div = soup.find_all('div', {'id':'imgAll' })[0]
