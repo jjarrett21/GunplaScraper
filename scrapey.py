@@ -4,7 +4,7 @@ from urllib.request import urlopen, Request, urlretrieve
 import urllib
 import re
 
-html_page = requests.get('https://www.1999.co.jp/eng/image/10522238')
+html_page = requests.get('https://www.1999.co.jp/eng/image/10700202')
 soup = BeautifulSoup(html_page.content, 'html.parser')
 
 images = soup.find_all('img', {'src':re.compile('jpg')})
@@ -17,13 +17,10 @@ for image in images:
   
 
 for i in range(len(image_link_list)):
-  name = 'image' + image_link_list[i]
-  print(name)
+  name = str(i) + '.jpg'
   try:
-    urllib.request.urlretrieve(image_link_list[i], name[i]+'.jpg')
-    print(html_page.status_code)
-   
+    urllib.request.urlretrieve(image_link_list[i], name)
+
   except:
-    # print('stuff not found')
     print(html_page.status_code)
 
