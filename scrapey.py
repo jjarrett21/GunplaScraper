@@ -9,11 +9,14 @@ html_page = requests.get('https://www.1999.co.jp/eng/image/10700202')
 soup = BeautifulSoup(html_page.content, 'html.parser')
 
 images = soup.find_all('img', {'src':re.compile('jpg')})
+image_div = soup.find_all('div', {'id':'imgAll' })[0]
 image_link_list = []
 
-for image in images:
-  fullImg = 'https://www.1999.co.jp' + image['src']
+
+for img in image_div.find_all('img', { 'src':re.compile('jpg')}):
+  fullImg = 'https://www.1999.co.jp' + img['src']
   image_link_list.append(fullImg)
+
 
 for i in range(len(image_link_list)):
   path = '/Users/jjarrett/webscraper/img'
