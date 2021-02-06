@@ -17,10 +17,10 @@ for image in images:
   
 
 for i in range(len(image_link_list)):
-  name = image['src']
+  name = 'image' + image_link_list[i]
   print(name)
   try:
-    urllib.request.urlretrieve(image_link_list[i], name)
+    urllib.request.urlretrieve(image_link_list[i], name[i]+'.jpg')
     print(html_page.status_code)
    
   except:
