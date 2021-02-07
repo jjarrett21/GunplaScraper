@@ -1,9 +1,19 @@
 import requests 
 from bs4 import BeautifulSoup
+import firebase_admin
+from firebase_admin import credentials, firestore, storage
 from urllib.request import urlopen, Request, urlretrieve
 import urllib
 import re
 import os 
+
+cred = credentials.ApplicationDefault()
+firebase_admin.initialize_app(cred, {
+  'projectId' : 'g-reader-5aafb'
+
+})
+
+
 
 link = input("Please enter link \n")
 html_page = requests.get(link)
@@ -11,6 +21,12 @@ soup = BeautifulSoup(html_page.content, 'html.parser')
 
 image_div = soup.find_all('div', {'id':'imgAll' })[0]
 image_link_list = []
+
+db = firestore.client()
+bucket = storage.bucket()
+blob = bucket.blob('gunpla')
+
+
 
 
 for img in image_div.find_all('img', { 'src':re.compile('jpg')}):
@@ -24,6 +40,7 @@ for i in range(len(image_link_list)):
   location = os.path.join(path, name)
   try:
     urllib.request.urlretrieve(image_link_list[i], location)
+    blob.upload_from_filename(location)
     print('grabbing images...')
 
   except:
