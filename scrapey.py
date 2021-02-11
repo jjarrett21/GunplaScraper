@@ -27,6 +27,7 @@ image_link_list = []
 db = firestore.client()
 bucket = storage.bucket()
 
+
 for img in image_div.find_all('img', { 'src':re.compile('jpg')}):
   fullImg = 'https://www.1999.co.jp' + img['src']
   image_link_list.append(fullImg)
@@ -39,7 +40,7 @@ for i in range(len(image_link_list)):
   blob = bucket.blob(name)
   try:
     urllib.request.urlretrieve(image_link_list[i], location)
-    blob.upload_from_filename(name)
+    blob.upload_from_filename(location)
     print('grabbing images...')
 
   except:
